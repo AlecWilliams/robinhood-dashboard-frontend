@@ -1,0 +1,42 @@
+<div class="container mt-2">
+
+</div>
+
+
+
+<div class="container text-center mt-2">
+    <h1>Enter stock name:</h1>
+
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-sm-3">
+          </div>
+
+          <div class="col-sm-6">
+            <div class="input-group mb-3" dropdown #dropdown="bs-dropdown">
+         
+                <input type="text"  [(ngModel)]="stockName" class="form-control " (ngModelChange)="stockInputChange($event)" placeholder="Stock name" >
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic" >
+                  <li *ngFor="let d of data$" role="menuitem"><a class="dropdown-item" (click)="stockName = d.symbol; dropdownClick()">{{d.symbol}}</a></li>
+                </ul>     
+             
+            </div>
+
+          <div class="col-sm-3">
+            <button type="button" (click)="getStockInfo()" class="btn btn-primary">Primary</button>
+
+          </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+      <div class="row card-group mt-5">
+        <div class="col-4 mt-5"  *ngFor="let d of data$">
+          <app-stock-card *ngIf="data$" [data]="d"></app-stock-card>
+        </div>
+      </div>
+    </div>
+        
+</div>
