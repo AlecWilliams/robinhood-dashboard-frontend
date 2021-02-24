@@ -70,6 +70,10 @@ export class AuthService {
 
   logout() : Observable<any>
   {
+    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiresAt');
+
     return this.httpClient.get('http://127.0.0.1:8000/rh/logout/');
   }
 
@@ -87,6 +91,18 @@ export class AuthService {
   {
     return this.httpClient.get(this.APIUrl + 'login/portfolio_profile/');
   }
+
+
+  getUserHoldings(): Observable<any>
+  {
+    return this.httpClient.get(this.APIUrl + 'login/user_holdings/');
+  }
+  getUserHoldingsWeekly(span: string): Observable<any>
+  {
+    return this.httpClient.post(this.APIUrl + 'login/user_holdings_weekly/', {"span": span});
+  }
+
+
 
   getAccessToken()
   {

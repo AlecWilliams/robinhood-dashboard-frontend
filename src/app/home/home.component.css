@@ -1,0 +1,14 @@
+
+.custom-crosshair {
+    width: 3;
+    stroke: red;
+}
+
+.container {
+    overflow: visible !important;
+}
+
+.highcharts-crosshair {
+    stroke-width: 1px;
+    stroke: red;
+}

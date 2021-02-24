@@ -14,6 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgOtpInputModule } from  'ng-otp-input';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { LogoutComponent } from './auth/logout/logout.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { StockChartComponent } from './stock-chart/stock-chart.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppComponent,
     HomeComponent,
     StockCardComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent,
+    NavbarComponent,
+    StockChartComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +41,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     FontAwesomeModule,
     NgOtpInputModule,
     BsDropdownModule.forRoot(),
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

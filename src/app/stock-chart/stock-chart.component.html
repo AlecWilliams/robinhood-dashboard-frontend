@@ -1,0 +1,16 @@
+
+<div *ngIf="currentPrice$" class="container mt-2">
+<h2>Price: {{currentPrice$  | currency:'USD' }} </h2>
+<h6>{{(dailyProfit$  | currency:'USD') + " " + zoomMessage }}</h6>
+
+</div>
+<div class="row">
+    <div *ngIf="showChart" class="container mt-2">
+        <div id="container" style="width:100%; "></div>
+    </div>
+</div>
+    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('day'); zoomLevel = 0">1D</button>
+    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('week'); zoomLevel = 1">1W</button>
+    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('month'); zoomLevel = 2">1M</button>
+
+  <hr/>

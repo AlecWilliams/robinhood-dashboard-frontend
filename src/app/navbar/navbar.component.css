@@ -1,0 +1,21 @@
+.search-bar{width:430px !important;}
+
+span{
+    position: absolute !important;
+    margin-left: 10px;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    color: gray;
+  }
+
+input:focus + .ico{
+    
+    color: red;
+  }
+
+input{
+    padding-left: 30px;
+}
+
+.popout { position: absolute !important;}

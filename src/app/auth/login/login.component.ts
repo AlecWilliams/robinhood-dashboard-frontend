@@ -88,10 +88,10 @@ export class LoginComponent implements OnInit {
 
 
 
-  test()
-  {
-    this.authService.testChallenge();
-  }
+  // test()
+  // {
+  //   this.authService.testChallenge();
+  // }
   sendCode(verificationToken: string)
   {
 

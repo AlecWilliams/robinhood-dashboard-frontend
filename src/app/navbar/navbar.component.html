@@ -1,0 +1,36 @@
+<nav class="navbar sticky-top navbar-light bg-light">
+    <!---------------------------Logo and Name----------------------------->
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="../assets/images/rh_logo_cropped.png" alt="" width="40" height="40" class="d-inline-block align-top">
+        RobinHood 
+      </a>
+      <!---------------------------Search Bar----------------------------->
+      <nav class="navbar navbar-light bg-light mr-auto">   
+
+
+       
+          <div class="input-group popout" dropdown #dropdown="bs-dropdown" >
+            <form class="form-inline">    
+                <input [(ngModel)]="stockName"  (ngModelChange)="stockInputChange($event)" [ngModelOptions]="{standalone: true}" 
+                    class="form-control search-bar" type="search" placeholder=" Search" aria-label="Search">
+                <span class="ico">
+                    <i class="fa fa-search ml"></i>
+                </span>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic" >
+                <li *ngFor="let d of data$" role="menuitem"><a class="dropdown-item" (click)="stockName = d.symbol; dropdownClick()">{{d.symbol}}</a></li>
+                </ul>     
+            </form>
+            </div>
+        
+      
+      </nav>
+      <!---------------------------Login/Logout buttons----------------------------->
+
+      <div class="justify-content-end">
+        <button *ngIf="isLoggedIn" class="btn btn-sm btn-outline-danger mr-2" (click)="logout()" type="button">Logout</button>
+        <a *ngIf="!isLoggedIn" routerLink="/login"><button class="btn btn-sm btn-outline-success" type="button">Login</button></a>
+      </div>  
+
+    </div>
+  </nav>
