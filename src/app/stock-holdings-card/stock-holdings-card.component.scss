@@ -1,0 +1,13 @@
+@import "../style.scss";
+
+.positive {
+    color: $green;
+}
+
+.negative {
+    color: $red;
+}
+
+.card {
+    box-shadow: 0 0 6px 0 rgba(100, 100, 100, 0.26);
+  }

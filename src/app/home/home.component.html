@@ -2,50 +2,14 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-8">
-      <div *ngIf="userPortfolio$">
-        <app-stock-chart></app-stock-chart>
-      </div>
-      <!-- <div *ngIf="userPortfolio$" class="container mt-2">
-        <h2>Portoflio: {{testValue  | currency:'USD' }}</h2>
-      </div>
-     -->
-      <!-- <div *ngIf="showChart" class="container mt-2">
-        <div id="container" style="width:100%; height:400px;"></div>
-      </div>
-      <button type="button" class="btn btn-primary"(click)="initUserPortfolioChart()">1D</button>
-      <button type="button" class="btn btn-primary"(click)="initUserPortfolioChart()">1W</button> -->
-    </div>
-    
+        <app-portfolio-chart></app-portfolio-chart>
+    </div> 
     <div class="col-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Featured
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
+      <app-stock-holdings-card></app-stock-holdings-card>
     </div>
+
   </div>
-  <!-- <div class="row">
-    <div class="col-8">
-      <app-stock-chart></app-stock-chart>
-    </div>
-  </div> -->
 </div>
 
   
 
-
-
-<!-- 
-    <div class="container">
-      <div class="row card-group mt-5">
-        <div class="col-4 mt-5"  *ngFor="let d of data$">
-          <app-stock-card *ngIf="data$" [data]="d"></app-stock-card>
-        </div>
-      </div>
-    </div> -->
-        

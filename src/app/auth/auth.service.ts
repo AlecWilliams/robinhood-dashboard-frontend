@@ -1,5 +1,4 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
 import { Injectable, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -36,35 +35,27 @@ export class AuthService {
         return data;
     }),
       catchError(this.errorHandler)
-    );
-
-  
+    ); 
   }
 
   verify(token: string, challenge_id: string, payload: any): Observable<any>
   {
-    return this.httpClient.post<LoginResponsePayload>('http://127.0.0.1:8000/rh/login/token/', {'token': token, 'challenge_id': challenge_id, 'payload': payload}).pipe(map(data => {
+    return this.httpClient.post<LoginResponsePayload>('http://127.0.0.1:8000/rh/login/token/', 
+    {'token': token, 'challenge_id': challenge_id, 'payload': payload}).pipe(map(data => {
          
       this.localStorage.store('authenticationToken', data.access_token);
       this.localStorage.store('refreshToken', data.refresh_token);
       this.localStorage.store('expiresAt', data.expires_in);
 
-
       this.loggedIn.emit(true);
       return data;
     })
     );
-
-  
-    
   }
 
   errorHandler(error: HttpErrorResponse) 
   {
     let errorMessage = '';
-
- 
-  
     return throwError(errorMessage);
   }
 
@@ -93,16 +84,20 @@ export class AuthService {
   }
 
 
+  getPortfolioHistoricals(): Observable<any>
+  {
+    return this.httpClient.get(this.APIUrl + 'login/get_historical_portfolio/');
+  }
+
+  getPortfolioHistoricalsVariable(span: string): Observable<any>
+  {
+    return this.httpClient.post(this.APIUrl + 'login/get_user_historicals_variable/', {"span": span});
+  }
+
   getUserHoldings(): Observable<any>
   {
-    return this.httpClient.get(this.APIUrl + 'login/user_holdings/');
+    return this.httpClient.get(this.APIUrl + 'get_user_holdings/');
   }
-  getUserHoldingsWeekly(span: string): Observable<any>
-  {
-    return this.httpClient.post(this.APIUrl + 'login/user_holdings_weekly/', {"span": span});
-  }
-
-
 
   getAccessToken()
   {
@@ -112,7 +107,6 @@ export class AuthService {
   {
     return this.getAccessToken() != null;
   }
-
 
 
   testChallenge()

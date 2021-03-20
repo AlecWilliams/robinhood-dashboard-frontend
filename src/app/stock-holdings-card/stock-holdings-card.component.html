@@ -1,0 +1,30 @@
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+      Stocks
+    </div>
+    <ul *ngIf="userHoldingsData" class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let item of userHoldingsData">
+          <div class="row">
+              <div class="col-6 font-weight-bold">
+                {{item.name}} 
+              </div>
+              <div class="col-6 text-right pr-sm-4">
+                {{item.price | currency:'USD'}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              {{item.quantity | number : '1.2-2'}}
+            </div>
+            <div class="col-6 text-right" [ngClass]="{
+                'positive' : item.percentChange > 0,
+                'negative' : item.percentChange < 0
+             }">
+              {{(item.percentChange | number : '1.2-2') + "%"}}
+          </div>
+        </div>
+        
+      </li>
+     
+    </ul>
+  </div>

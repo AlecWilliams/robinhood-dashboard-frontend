@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { StockService } from '../stock.service';
 
@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
    // console.log(this.stockName);
 
     
-    this.stockService.getTest(this.stockName).subscribe(data => {
+    this.stockService.getStockData(this.stockName).subscribe(data => {
       //console.log(data);
       this.data$ = data;
       if(data.length > 0)
@@ -51,24 +51,30 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  dropdownClick()
+  dropdownClick(event)
   {
+    this.stockName = event.target.value.symbol;
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'name': this.stockName },
+    };
+    this.router.navigate(["/stock"], navigationExtras );
+
     //dont call getStock() as that will reopen dropdown
-    this.stockService.getTest(this.stockName).subscribe(data => {
-      //console.log(data);
-      this.data$ = data;
-    });
+    // this.stockService.getStockData(this.stockName).subscribe(data => {
+    //   console.log(data);
+    //   this.data$ = data;
+    // });
     this.dropdown.show(false);
     this.dropdown.toggle(false);
-
+ 
   }
 
   stockInputChange(event)
   {
-    console.log('IT WORKED');
     if(this.stockName.length > 2)
     {
       this.getStock();
+      
       //console.log(this.stockName);
       //this.dropdown.show(true);
     }

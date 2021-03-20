@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import { AuthService } from '../auth/auth.service';
 import { interval, Observable, Subscription } from 'rxjs';
-import { StockService } from '../stock.service';
 
-export class StockHistoricals {
+export class PortfolioHistoricals {
   equity_historicals = [];
 }
 export class UserProfile {
@@ -19,33 +18,24 @@ export class UserProfile {
 }
 
 @Component({
-  selector: 'app-stock-chart',
-  templateUrl: './stock-chart.component.html',
-  styleUrls: ['./stock-chart.component.css']
+  selector: 'app-portfolio-chart',
+  templateUrl: './portfolio-chart.component.html',
+  styleUrls: ['./portfolio-chart.component.css']
 })
-export class StockChartComponent implements OnInit {
+export class PortfolioChartComponent implements OnInit {
   Chart;
   showChart: boolean = false;
   options;
   testValue;
-  currentPrice : any;
-  mouseOverPrice : any;
-  dailyProfit: number;
+  currentPrice$ : any;
+  dailyProfit$: number;
   zoomLevel = 0;
   zoomMessage = "Today"
   userPortfolio$;
   currentEquity;
   chartMouseOver = false;
   previousDayEquityClose;
-
-
-
-
-  @Input() stockName: string;
-  @Input() stockInfo;
-
-
-  constructor(private authService: AuthService, private stockService: StockService) { 
+  constructor(private authService: AuthService) { 
 
     const that = this;
     var crosshair,
@@ -67,7 +57,7 @@ export class StockChartComponent implements OnInit {
                     mouseOver: function () {
                         var chart = this.series.chart;
                         //This will update the figure above the graph
-                        that.mouseOverPrice = this.y;
+                        that.currentPrice$ = this.y;
                         var r = chart.renderer,
                         left = chart.plotLeft,
                         top = chart.plotTop,
@@ -203,59 +193,58 @@ export class StockChartComponent implements OnInit {
 
   }
 
-
-
   ngOnInit(): void {
-
-    this.showChart = true;
-    this.stockService.getStockInfo(this.stockName, "day").subscribe(data => {
-      //console.log(data);
-      
-      this.initStockChart(data);
-      
-    });
-    this.dailyProfit = Number(this.stockInfo.ask_price) - this.stockInfo.previous_close;
-
-
-    // if(this.authService.isLoggedIn())
-    // {
+    if(this.authService.isLoggedIn())
+    {
      
-    //   this.showChart = true;
-    //   //Get profile info
-    //   this.authService.getProfileInformation().subscribe((data: UserProfile) => {
+      this.showChart = true;
+      //Get profile info
+      this.authService.getProfileInformation().subscribe((data: UserProfile) => {
 
-    //     this.initUserPortfolioChart();
-    //   });
+        this.initUserPortfolioChart();
+      });
 
-    //   this.getPortoflioInformation();
+      this.getPortoflioInformation();
       
-    //   //pull it again ever 10 seconds if we are still logged in
-    //   const loop = interval(10000).subscribe(x => {
-    //     if(!this.authService.isLoggedIn())
-    //     {
-    //       loop.unsubscribe();
-    //     }
-    //     else{
-    //       this.getPortoflioInformation();
-    //       //this.updateChart('day');
-    //     }     
-    //   });
-    // }
-
+      //pull it again ever 10 seconds if we are still logged in
+      const loop = interval(10000).subscribe(x => {
+        if(!this.authService.isLoggedIn())
+        {
+          loop.unsubscribe();
+        }
+        else{
+          this.getPortoflioInformation();
+          //this.updateChart('day');
+        }     
+      });
 
      
-    
+    }
   }
 
- 
+  getPortoflioInformation()
+  {
+    this.authService.getPortfolioInformation().subscribe((data) => {
+      console.log(data);
+      this.userPortfolio$ = data;
+      this.currentEquity = data.equity;
 
-  initStockChart(historicals)
+      //ISSUE: THIS IS RUN EVERY 10 SECOND. ONLY WANT PREVOIUS DAY EQUITY TO BE SET ONCE.
+      if(this.previousDayEquityClose == null)
+      {
+        this.previousDayEquityClose = data.equity_previous_close;
+        this.dailyProfit$ = this.currentEquity - data.equity_previous_close;
+      }     
+    });
+  }
+
+  initUserPortfolioChart()
   {
       //Create Chart
- 
+      this.authService.getPortfolioHistoricals().subscribe((data: PortfolioHistoricals) => {
         const userData = [];
 
-
+        const historicals = data.equity_historicals;
         //console.log(historicals);
         historicals.forEach(row => {
 
@@ -263,14 +252,13 @@ export class StockChartComponent implements OnInit {
               // myDate,
                //do Date.parse(row.beings_at)
                Date.parse(row.begins_at),
-               Number(row.open_price)
+               Number(row.open_equity)
              ];
             
              userData.push(temp_row);
              this.testValue = row.open_equity;
         });
         
-        //console.log(userData);
         this.options.series[0]['data'] = userData;
 
         //set daily profit
@@ -283,41 +271,32 @@ export class StockChartComponent implements OnInit {
         else{
           this.options.series[0].color = "#00c805";
         }
-        this.currentPrice = userData[userData.length-1][1];
-        //console.log(this.currentPrice);
-        this.Chart = Highcharts.stockChart('stockChartContainer', this.options);
+        this.currentPrice$ = userData[userData.length-1][1];
+        this.Chart = Highcharts.stockChart('container', this.options);
       
-
-        this.Chart.yAxis[0].addPlotLine({
-          value: this.stockInfo.previous_close,
-          color: '#4a4f52',
-          width: 1,
-          dashStyle: 'dot',
-          id: 'previousDayClose'
-        });
-        
         //Get the prevois days equity close to plot dotted line.
-        // this.stockService.getStockQuote(this.stockName).subscribe(data => {
-        //   this.Chart.yAxis[0].addPlotLine({
-        //     value: data[0].previous_close,
-        //     color: '#4a4f52',
-        //     width: 1,
-        //     dashStyle: 'dot',
-        //     id: 'previousDayClose'
-        //   });
+        this.authService.getPortfolioInformation().subscribe((data) => {
+          //assign this to calculate gain/loss for the day
           
-        // })
+          this.Chart.yAxis[0].addPlotLine({
+            value: data.equity_previous_close,
+            color: '#4a4f52',
+            width: 1,
+            dashStyle: 'dot',
+            id: 'previousDayClose'
+          });
+        });
 
 
-
+      });
   }
 
   updateData(span: string)
   {
     const userData = [];
-    this.stockService.getStockInfo(this.stockName, span).subscribe((data) => {
+    this.authService.getPortfolioHistoricalsVariable(span).subscribe((data: PortfolioHistoricals) => {
      
-      const historicals = data;
+      const historicals = data.equity_historicals;
      
       historicals.forEach(row => {
 
@@ -339,10 +318,10 @@ export class StockChartComponent implements OnInit {
   updateChart(span: string)
   {
       //Create Chart
-      this.stockService.getStockInfo(this.stockName, span).subscribe((data) => {
+      this.authService.getPortfolioHistoricalsVariable(span).subscribe((data: PortfolioHistoricals) => {
         const userData = [];
 
-        const historicals = data;
+        const historicals = data.equity_historicals;
        
         historicals.forEach(row => {
 
@@ -350,11 +329,11 @@ export class StockChartComponent implements OnInit {
               // myDate,
                //do Date.parse(row.beings_at)
                Date.parse(row.begins_at),
-               Number(row.open_price)
+               Number(row.open_equity)
              ];
             
              userData.push(temp_row);
-            // this.testValue = row.open_equity;
+             this.testValue = row.open_equity;
      
 
         });
@@ -381,25 +360,26 @@ export class StockChartComponent implements OnInit {
         switch(span) {
           case 'day':
             this.zoomMessage = "Today";
-            this.dailyProfit = Number(this.stockInfo.ask_price) - this.stockInfo.previous_close;
+            this.dailyProfit$ = Number(this.currentEquity) - this.previousDayEquityClose;
             //If we have prev day close, redraw the dot line
-           
+            if(this.userPortfolio$)
+            {
               this.Chart.yAxis[0].addPlotLine({
-                value: this.stockInfo.previous_close,
+                value: this.userPortfolio$.equity_previous_close,
                 color: '#4a4f52',
                 width: 1,
                 dashStyle: 'dot',
                 id: 'previousDayClose'
               });
-      
+            }
             break;
           case 'week':
-            this.dailyProfit = Number(this.stockInfo.ask_price) - userData[0][1];
+            this.dailyProfit$ = Number(this.currentEquity) - userData[0][1];
             this.zoomMessage = "Past Week";
             this.Chart.yAxis[0].removePlotLine('previousDayClose');
             break;
           case 'month':
-            this.dailyProfit = Number(this.stockInfo.ask_price) - userData[0][1];
+            this.dailyProfit$ = Number(this.currentEquity) - userData[0][1];
             this.zoomMessage = "Past Month";
             this.Chart.yAxis[0].removePlotLine('previousDayClose');
           break;

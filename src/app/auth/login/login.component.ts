@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth.service';
 import { LoginRequestPayload } from '../login-request.payload';
-import { LoginResponsePayload } from '../login-response.payload';
 
 @Component({
   selector: 'app-login',
@@ -52,9 +51,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginRequestPayload)
     .subscribe(data => {
-
-      
-      console.log(data.hasOwnProperty('challenge_id'));
       if(data.hasOwnProperty('challenge_id'))
       {
         this.challenged = true;
@@ -66,57 +62,35 @@ export class LoginComponent implements OnInit {
         this.isError = false;
         this.router.navigateByUrl('');
         this.toastService.success('Login Successful');
-      }
-     
-     
+      }   
     }, error => {
-     // this.isError = true;
       this.toastService.error('Login Failed');
-      console.log('LOGIN FAILED in login', error);
-      //throwError(error);
     });
 
   }
+
   onOtpChange(otp)
   {
-   
     if(otp.length == 6)
-    {
       this.sendCode(otp);
-    }
   }
 
-
-
-  // test()
-  // {
-  //   this.authService.testChallenge();
-  // }
   sendCode(verificationToken: string)
   {
-
-
     this.authService.verify(verificationToken, this.challenge_id, this.payload).subscribe(data => {
-     // console.log(Object.keys(data));
       //Incorrect token, 
       if(Object.keys(data).includes("challenge"))
       {
         this.toastService.error('Incorrect');
-        //this.router.navigateByUrl('/login');
-        //this.challenged = false;
-
       }
       else
       {
         this.isError = false;
         this.router.navigateByUrl('');
         this.toastService.success('Login Successful');
-        console.log(data);
       }
     }, error => {
-      console.log('LOGIN FAILED', error);
        this.toastService.success('Incorrect Code');
-
     })
   }
 }

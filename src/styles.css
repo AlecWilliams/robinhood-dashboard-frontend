@@ -3,6 +3,8 @@
 @import '../node_modules/ngx-toastr/toastr.css';
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
+
+
 html{
     overflow-y: scroll;
 }

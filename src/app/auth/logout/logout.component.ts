@@ -13,10 +13,8 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void 
   {
-
     this.authService.logout().subscribe(data => {
-    //console.log(data);
-    //this.router.navigateByUrl('/');
+    //set a 1 second timeout to display loading animation
     setTimeout(() => {
       this.router.navigateByUrl('');
     }, 1000);

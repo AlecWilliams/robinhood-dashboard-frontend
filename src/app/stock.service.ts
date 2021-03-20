@@ -22,14 +22,30 @@ export class StockService {
 
 
 
-  getTest(stockName: string): Observable<StockInfo[]> 
+  getStockData(stockName: string): Observable<StockInfo[]> 
   {
     return this.http.post<StockInfo[]>('http://127.0.0.1:8000/rh/', {"name": stockName});
   }
 
-  getStockInfo(stockName: string): Observable<any>
+  getStockNameByURL(url: string): Observable<StockInfo[]> 
   {
-    return this.http.post('http://127.0.0.1:8000/rh/stock/get_info/', {"name": stockName});
+    return this.http.post<StockInfo[]>('http://127.0.0.1:8000/rh/url/', {"url": url});
+  }
+
+  getStockFundamentals(stockName: string): Observable<any> 
+  {
+    return this.http.post<StockInfo[]>('http://127.0.0.1:8000/rh/get_fundamentals/', {"name": stockName});
+  }
+
+  getStockInfo(stockName: string, span: string): Observable<any>
+  {
+    return this.http.post('http://127.0.0.1:8000/rh/stock/get_info/', {"name": stockName, "span": span});
+  }
+
+  //can take either string or string array as input
+  getStockQuote(stocks):Observable<any>
+  {
+    return this.http.post('http://127.0.0.1:8000/rh/get_stock_quote/', {stocks});
   }
 
 }

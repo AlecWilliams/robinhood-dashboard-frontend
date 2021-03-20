@@ -1,16 +1,17 @@
 
-<div *ngIf="currentPrice" class="container mt-2">
-<h2>{{ (chartMouseOver==true? mouseOverPrice : currentPrice)  | currency:'USD' }} </h2>
-<div>
-<h6 style="display: inline-block">{{(dailyProfit  | currency:'USD')}}&nbsp;</h6> 
-<h6 style="display: inline-block" >{{zoomMessage}}</h6>
-</div>
+<div *ngIf="currentPrice$" class="container mt-2">
+<h2>Price: {{(chartMouseOver==true? currentPrice$ : currentEquity)  | currency:'USD' }}</h2>
+
+
+<h6 style="display: inline-block">{{(dailyProfit$  | currency:'USD')}}&nbsp;</h6>
+<h6 style="display: inline-block">{{zoomMessage}}</h6>
+
 
 
 </div>
 <div class="row">
     <div *ngIf="showChart" class="container mt-2">
-        <div id="stockChartContainer" style="width:100%; "></div>
+        <div id="container" style="width:100%; "></div>
     </div>
 </div>
     <button type="button" class="btn btn-primary mr-1"(click)="updateChart('day'); zoomLevel = 0">1D</button>
@@ -18,4 +19,3 @@
     <button type="button" class="btn btn-primary mr-1"(click)="updateChart('month'); zoomLevel = 2">1M</button>
 
   <hr/>
-  

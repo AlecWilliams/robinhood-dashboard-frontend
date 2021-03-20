@@ -17,8 +17,11 @@
                 <span class="ico">
                     <i class="fa fa-search ml"></i>
                 </span>
+
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic" >
-                <li *ngFor="let d of data$" role="menuitem"><a class="dropdown-item" (click)="stockName = d.symbol; dropdownClick()">{{d.symbol}}</a></li>
+                  <li *ngFor="let d of data$">
+                    <a class="dropdown-item" [value]="d" (click)="dropdownClick($event)">{{d.symbol}}</a>
+                  </li>
                 </ul>     
             </form>
             </div>
