@@ -50,7 +50,20 @@ export class NavbarComponent implements OnInit {
      
     })
   }
+  logoClickRedirect()
+  {
+    if(this.authService.isLoggedIn())
+    {
+      this.router.navigateByUrl('/dashboard');
+    }
+    else
+    {
+      this.router.navigateByUrl('/login');
 
+    }
+
+
+  }
   dropdownClick(event)
   {
     this.stockName = event.target.value.symbol;

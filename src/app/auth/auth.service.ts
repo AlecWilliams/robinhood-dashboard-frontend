@@ -5,7 +5,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { LoginRequestPayload } from './login-request.payload';
-import { LoginResponsePayload } from './login-response.payload';
+import { LoginChallengePayload, LoginResponsePayload } from './login-response.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class AuthService {
     ); 
   }
 
-  verify(token: string, challenge_id: string, payload: any): Observable<any>
+  verify(token: string, challenge_id: string, payload: LoginChallengePayload): Observable<any>
   {
     return this.httpClient.post<LoginResponsePayload>('http://127.0.0.1:8000/rh/login/token/', 
     {'token': token, 'challenge_id': challenge_id, 'payload': payload}).pipe(map(data => {

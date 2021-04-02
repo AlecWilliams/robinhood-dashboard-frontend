@@ -6,7 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { StockPageComponent } from './stock-page/stock-page.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: 'dashboard', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'stock', component: StockPageComponent},

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   challenged = false;
   challenge_id: string;
   payload: any;
+
   constructor(private authService: AuthService, private toastService: ToastrService,
     private router: Router, private activatedRoute: ActivatedRoute) 
   {
@@ -33,6 +34,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void 
   {
+
+    //check is user is logged in, if so direct to dashboard
+    if(this.authService.isLoggedIn())
+    {
+      this.router.navigateByUrl('/dashboard');
+
+    }
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -55,12 +63,14 @@ export class LoginComponent implements OnInit {
       {
         this.challenged = true;
         this.challenge_id = data.challenge_id;
+        //console.log('DATA PAYLOAD INC');
+        //console.log(data);
         this.payload = data.payload;
       }
       else
       {
         this.isError = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/dashboard');
         this.toastService.success('Login Successful');
       }   
     }, error => {
@@ -86,7 +96,7 @@ export class LoginComponent implements OnInit {
       else
       {
         this.isError = false;
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/dashboard');
         this.toastService.success('Login Successful');
       }
     }, error => {

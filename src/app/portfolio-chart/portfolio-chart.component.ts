@@ -20,7 +20,7 @@ export class UserProfile {
 @Component({
   selector: 'app-portfolio-chart',
   templateUrl: './portfolio-chart.component.html',
-  styleUrls: ['./portfolio-chart.component.css']
+  styleUrls: ['./portfolio-chart.component.scss']
 })
 export class PortfolioChartComponent implements OnInit {
   Chart;
@@ -272,7 +272,7 @@ export class PortfolioChartComponent implements OnInit {
           this.options.series[0].color = "#00c805";
         }
         this.currentPrice$ = userData[userData.length-1][1];
-        this.Chart = Highcharts.stockChart('container', this.options);
+        this.Chart = Highcharts.stockChart('chart-container', this.options);
       
         //Get the prevois days equity close to plot dotted line.
         this.authService.getPortfolioInformation().subscribe((data) => {

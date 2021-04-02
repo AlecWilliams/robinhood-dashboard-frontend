@@ -1,21 +1,30 @@
 
 <div *ngIf="currentPrice$" class="container mt-2">
-<h2>Price: {{(chartMouseOver==true? currentPrice$ : currentEquity)  | currency:'USD' }}</h2>
-
-
-<h6 style="display: inline-block">{{(dailyProfit$  | currency:'USD')}}&nbsp;</h6>
-<h6 style="display: inline-block">{{zoomMessage}}</h6>
-
-
-
+    <h2>Price: {{(chartMouseOver==true? currentPrice$ : currentEquity)  | currency:'USD' }}</h2>
+    <h6 style="display: inline-block; font-weight: bold;">{{(dailyProfit$  | currency:'USD')}}&nbsp;</h6>
+    <h6 style="display: inline-block; font-weight: 500;">{{zoomMessage}}</h6>
 </div>
+
 <div class="row">
-    <div *ngIf="showChart" class="container mt-2">
-        <div id="container" style="width:100%; "></div>
+    <div *ngIf="showChart" class="container mt-2 chart">
+        <div id="chart-container" style="width:110%; "></div>
     </div>
 </div>
-    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('day'); zoomLevel = 0">1D</button>
-    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('week'); zoomLevel = 1">1W</button>
-    <button type="button" class="btn btn-primary mr-1"(click)="updateChart('month'); zoomLevel = 2">1M</button>
 
-  <hr/>
+
+
+<div class="button-row">
+    <button type="button" autofocus class="btn btn-outline mr-4" (click)="updateChart('day'); zoomLevel = 0">1D</button>
+    <button type="button" class="btn btn-outline mr-4" (click)="updateChart('week'); zoomLevel = 1">1W</button>
+    <button type="button" class="btn btn-outline mr-4" (click)="updateChart('month'); zoomLevel = 2">1M</button>
+    <hr class="button-br"/>
+</div>
+
+<div class="container mb-5">
+    <h5 style="float: left; margin-left: 5px;">Buying Power</h5>
+    <p style="float: right; font-weight: bold;">{{userPortfolio$.excess_margin | currency:'USD'}}</p>
+</div>
+
+<hr class="buying-br"/>
+
+
