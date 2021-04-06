@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/user.service';
 import { AuthService } from '../../auth/auth.service';
 import { StockService } from '../../stock.service';
 
@@ -24,7 +25,17 @@ export class StockHoldingsCardComponent implements OnInit {
   userHoldings$ : UserHoldings[];
   userHoldings2 : UserHoldings2[];
   userHoldingsData;
-  constructor(private authService: AuthService, private stockService: StockService) { }
+
+  userWatchlistsArray: any[];
+  userFirstList: any[];
+
+  status: boolean = false;
+  clickEvent(){
+      this.status = !this.status;       
+  }
+
+
+  constructor(private authService: AuthService, private stockService: StockService, private userService: UserService) { }
 
   ngOnInit(): void {
     //Get basic info on every stock held by user
@@ -57,31 +68,17 @@ export class StockHoldingsCardComponent implements OnInit {
         }
 
         this.userHoldingsData = userHoldingsData;
-        console.log(userHoldingsData);
           
         });
       })
 
-    //   const userData = [];
 
-    //     const historicals = data.equity_historicals;
-    //     //console.log(historicals);
-    //     historicals.forEach(row => {
-
-    //         const temp_row = [
-    //           // myDate,
-    //            //do Date.parse(row.beings_at)
-    //            Date.parse(row.begins_at),
-    //            Number(row.open_equity)
-    //          ];
-            
-    //          userData.push(temp_row);
-    //          this.testValue = row.open_equity;
-    //     });
-
-    // })
-
-    
+      //Get user watchlists
+      this.userService.getUserWatchlists().subscribe(data => {
+        console.log(data);
+        //this.userWatchlistsArray = data.results;
+        this.userFirstList = data.results;
+      });
   }
 
 }

@@ -24,6 +24,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ReadMoreComponent } from './stock-page/read-more/read-more.component';
 import { NewsCardComponent } from './news-card/news-card.component';
 import { NewsListComponent } from './news-list/news-list.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { NewsListComponent } from './news-list/news-list.component';
     StockPageComponent,
     ReadMoreComponent,
     NewsCardComponent,
-    NewsListComponent
+    NewsListComponent,
+    DateAgoPipe
   ],
   imports: [
     BrowserModule,

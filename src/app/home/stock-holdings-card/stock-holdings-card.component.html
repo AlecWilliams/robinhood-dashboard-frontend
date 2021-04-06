@@ -23,8 +23,38 @@
               {{(item.percentChange | number : '1.2-2') + "%"}}
           </div>
         </div>
+      </li>
+    </ul>
+
+    <div *ngIf="userFirstList">
+    <div class="card-header">
+      My First List
+    </div>
+  
+    <ul *ngIf="userHoldingsData" class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let item of userFirstList">
+          <div class="row">
+              <div class="col-6 font-weight-bold">
+                {{item.symbol}} 
+              </div>
+              <div class="col-6 text-right pr-sm-4">
+                {{item.price | currency:'USD'}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              {{item.quantity | number : '1.2-2'}}
+            </div>
+            <div class="col-6 text-right" [ngClass]="{
+                'positive' : item.one_day_percent_change > 0,
+                'negative' : item.one_day_percent_change < 0
+             }">
+              {{(item.one_day_percent_change | number : '1.2-2') + "%"}}
+          </div>
+        </div>
         
       </li>
      
     </ul>
+    </div>
   </div>

@@ -4,11 +4,11 @@
         <div>
             <div>
                 <small><strong>{{ article.source }}&nbsp;</strong></small>
-                <small>3 days ago</small>
+                <small>{{article.published_at | dateAgo}}</small>
             </div>  
             <div>
                 <h6 class="mb-1">{{article.title}}</h6>
-                <p class="mb-1">{{article.preview_text.substring(0,70)+'...' }}</p>
+                <p class="mb-1">{{article.preview_text.substring(0,70) + '...' }}</p>
             </div>
         </div>
         <img [src]="article.preview_image_url" alt="..." class="thumbnail">

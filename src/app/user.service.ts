@@ -27,6 +27,11 @@ export class UserService {
 
   getNews(stockSymbol: string): Observable<NewsArticle[]> 
   {
-    return this.http.get<NewsArticle[]>(this.APIUrl +'news/' + stockSymbol);
+    return this.http.get<NewsArticle[]>(this.APIUrl + 'news/' + stockSymbol);
+  }
+
+  getUserWatchlists(): Observable<any>
+  {
+    return this.http.get<any>(this.APIUrl + 'get_user_watchlists');
   }
 }

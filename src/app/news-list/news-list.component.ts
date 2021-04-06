@@ -32,11 +32,8 @@ export class NewsListComponent implements OnInit {
     this.userService.getNews(this.stockSymbol).subscribe((data : NewsArticle[]) => {
 
       this.newsArticles = data;
-      console.log(this.newsArticles.values);
-
-
-
     })
   }
 
+  
 }
