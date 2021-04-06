@@ -21,7 +21,7 @@ export class UserProfile {
 @Component({
   selector: 'app-stock-chart',
   templateUrl: './stock-chart.component.html',
-  styleUrls: ['./stock-chart.component.css']
+  styleUrls: ['./stock-chart.component.scss']
 })
 export class StockChartComponent implements OnInit {
   Chart;
@@ -41,9 +41,10 @@ export class StockChartComponent implements OnInit {
 
 
 
-  @Input() stockName: string;
+  @Input() stockSymbol: string;
   @Input() stockInfo;
 
+  stockName : string;
 
   constructor(private authService: AuthService, private stockService: StockService) { 
 
@@ -207,8 +208,12 @@ export class StockChartComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.stockService.getStockNameByURL(this.stockInfo.instrument).subscribe((data) => {
+      //console.log(data);
+      this.stockName = data.toString();
+    })
     this.showChart = true;
-    this.stockService.getStockInfo(this.stockName, "day").subscribe(data => {
+    this.stockService.getStockInfo(this.stockSymbol, "day").subscribe(data => {
       //console.log(data);
       
       this.initStockChart(data);
@@ -315,7 +320,7 @@ export class StockChartComponent implements OnInit {
   updateData(span: string)
   {
     const userData = [];
-    this.stockService.getStockInfo(this.stockName, span).subscribe((data) => {
+    this.stockService.getStockInfo(this.stockSymbol, span).subscribe((data) => {
      
       const historicals = data;
      
@@ -339,7 +344,7 @@ export class StockChartComponent implements OnInit {
   updateChart(span: string)
   {
       //Create Chart
-      this.stockService.getStockInfo(this.stockName, span).subscribe((data) => {
+      this.stockService.getStockInfo(this.stockSymbol, span).subscribe((data) => {
         const userData = [];
 
         const historicals = data;

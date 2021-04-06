@@ -16,12 +16,14 @@ import { NgOtpInputModule } from  'ng-otp-input';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { PortfolioChartComponent } from './portfolio-chart/portfolio-chart.component';
-import { StockHoldingsCardComponent } from './stock-holdings-card/stock-holdings-card.component';
+import { PortfolioChartComponent } from './home/portfolio-chart/portfolio-chart.component';
+import { StockHoldingsCardComponent } from './home/stock-holdings-card/stock-holdings-card.component';
 import { StockPageComponent } from './stock-page/stock-page.component';
 import { StockChartComponent } from './stock-chart/stock-chart.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ReadMoreComponent } from './stock-page/read-more/read-more.component';
+import { NewsCardComponent } from './news-card/news-card.component';
+import { NewsListComponent } from './news-list/news-list.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { ReadMoreComponent } from './stock-page/read-more/read-more.component';
     StockHoldingsCardComponent,
     StockChartComponent,
     StockPageComponent,
-    ReadMoreComponent
+    ReadMoreComponent,
+    NewsCardComponent,
+    NewsListComponent
   ],
   imports: [
     BrowserModule,
@@ -50,8 +54,7 @@ import { ReadMoreComponent } from './stock-page/read-more/read-more.component';
     FontAwesomeModule,
     NgOtpInputModule,
     BsDropdownModule.forRoot(),
-    CollapseModule.forRoot(),
-    
+    CollapseModule.forRoot(),    
   ],
   providers: [],
   bootstrap: [AppComponent]

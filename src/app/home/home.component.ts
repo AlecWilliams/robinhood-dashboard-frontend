@@ -51,6 +51,8 @@ export class HomeComponent implements OnInit {
   showChart: boolean = false;
   options;
 
+  GME = "GME";
+
   @ViewChild('dropdown') dropdown;
 
   constructor(private stockService: StockService, private AuthService: AuthService, private http: HttpClient) {}

@@ -1,18 +1,15 @@
 
-<div *ngIf="currentPrice" class="container mt-2">
-    <h2>{{stockName}}</h2>
-    <h2>{{ (chartMouseOver==true? mouseOverPrice : currentPrice)  | currency:'USD' }} </h2>
-    <h6 style="display: inline-block; font-weight: bold;">{{(dailyProfit  | currency:'USD')}}&nbsp;</h6>
+<div *ngIf="currentPrice$" class="container mt-2">
+    <h2>Price: {{(chartMouseOver==true? currentPrice$ : currentEquity)  | currency:'USD' }}</h2>
+    <h6 style="display: inline-block; font-weight: bold;">{{(dailyProfit$  | currency:'USD')}}&nbsp;</h6>
     <h6 style="display: inline-block; font-weight: 500;">{{zoomMessage}}</h6>
 </div>
-
-
 
 
 <div *ngIf="showChart">
     <div class="row">
         <div class="container mt-2 chart">
-            <div id="stockChartContainer" style="width:110%; "></div>
+            <div id="chart-container" style="width:110%; "></div>
         </div>
     </div>
 
@@ -22,6 +19,14 @@
         <button type="button" class="btn btn-outline mr-4" (click)="updateChart('month'); zoomLevel = 2">1M</button>
         <hr class="button-br"/>
     </div>
+
+    <div *ngIf="userPortfolio$" class="container mb-5">
+        <h5 style="float: left; margin-left: 5px;">Buying Power</h5>
+        <p style="float: right; font-weight: bold;">{{userPortfolio$.excess_margin | currency:'USD'}}</p>
+    </div>
+
+    <hr class="buying-br"/>
+
 </div>
 
-  
+

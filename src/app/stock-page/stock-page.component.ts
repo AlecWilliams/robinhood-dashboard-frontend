@@ -42,7 +42,7 @@ export class StockPageComponent implements OnInit {
         //console.log(data);
 
         this.stockInformation = data[0] as StockInformation;
-        console.log(this.stockInformation);
+        //console.log(this.stockInformation);
  
       });
 

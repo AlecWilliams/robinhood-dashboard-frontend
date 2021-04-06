@@ -1,13 +1,18 @@
-
 <div class="container mt-5">
+
   <div class="row">
     <div class="col-8">
         <app-portfolio-chart></app-portfolio-chart>
     </div> 
     <div class="col-4">
       <app-stock-holdings-card></app-stock-holdings-card>
-    </div>
+    </div> 
+  </div>
 
+  <div class="row">
+    <div class="col-8">
+      <app-news-list [stockSymbol]="GME"></app-news-list>
+    </div> 
   </div>
 </div>
 

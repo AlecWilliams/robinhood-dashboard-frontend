@@ -21,7 +21,7 @@ export class AuthService {
   login(loginRequestPayload: LoginRequestPayload) : Observable<any>
   {
     
-    return this.httpClient.post<LoginResponsePayload>('http://127.0.0.1:8000/rh/login/', loginRequestPayload).pipe(
+    return this.httpClient.post<LoginResponsePayload>(this.APIUrl + 'login/', loginRequestPayload).pipe(
       map(data => {
         //If user token stored, already logged in - no need for token cerification
         if(data.access_token)
@@ -40,7 +40,7 @@ export class AuthService {
 
   verify(token: string, challenge_id: string, payload: LoginChallengePayload): Observable<any>
   {
-    return this.httpClient.post<LoginResponsePayload>('http://127.0.0.1:8000/rh/login/token/', 
+    return this.httpClient.post<LoginResponsePayload>(this.APIUrl + 'login/token/', 
     {'token': token, 'challenge_id': challenge_id, 'payload': payload}).pipe(map(data => {
          
       this.localStorage.store('authenticationToken', data.access_token);
@@ -65,7 +65,7 @@ export class AuthService {
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiresAt');
 
-    return this.httpClient.get('http://127.0.0.1:8000/rh/logout/');
+    return this.httpClient.get(this.APIUrl + 'logout/');
   }
 
   getProfileInformation(): Observable<any>
@@ -109,10 +109,10 @@ export class AuthService {
   }
 
 
-  testChallenge()
-  {
-    this.httpClient.post('https://api.robinhood.com/challenge/8690c796-7049-4b55-98db-8bcbf54c3552/respond/', {"response": "532585"}).subscribe(data => {
-      console.log(data);
-  });
-  }
+  // testChallenge()
+  // {
+  //   this.httpClient.post('https://api.robinhood.com/challenge/8690c796-7049-4b55-98db-8bcbf54c3552/respond/', {"response": "532585"}).subscribe(data => {
+  //     console.log(data);
+  // });
+  // }
 }

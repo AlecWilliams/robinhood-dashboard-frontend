@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { interval, Observable, Subscription } from 'rxjs';
 
 export class PortfolioHistoricals {
@@ -207,7 +207,7 @@ export class PortfolioChartComponent implements OnInit {
       this.getPortoflioInformation();
       
       //pull it again ever 10 seconds if we are still logged in
-      const loop = interval(10000).subscribe(x => {
+      const loop = interval(100000).subscribe(x => {
         if(!this.authService.isLoggedIn())
         {
           loop.unsubscribe();
@@ -225,7 +225,6 @@ export class PortfolioChartComponent implements OnInit {
   getPortoflioInformation()
   {
     this.authService.getPortfolioInformation().subscribe((data) => {
-      console.log(data);
       this.userPortfolio$ = data;
       this.currentEquity = data.equity;
 

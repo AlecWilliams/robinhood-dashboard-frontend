@@ -1,9 +1,8 @@
-<div class="container mt-5">
+<div class="container mt-5 ">
 
     <div class="row">
         <div class="col-8" *ngIf="stockInfo"> 
-            <h2 style="margin-left: -25px">{{stockName}}</h2>
-            <app-stock-chart [stockName]="stockTicker" [stockInfo]="stockInfo"></app-stock-chart>
+            <app-stock-chart [stockSymbol]="stockTicker" [stockInfo]="stockInfo"></app-stock-chart>
 
             <h2 class="mt-4">About</h2>
             <hr/>
@@ -11,6 +10,7 @@
 
             <read-more [text]="stockInformation.description" [maxLength]="100"></read-more>
 
+            <app-news-list [stockSymbol]="stockTicker"></app-news-list>
         </div> 
         
    </div>

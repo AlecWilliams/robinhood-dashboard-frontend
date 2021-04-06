@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
-import { StockService } from '../stock.service';
+import { AuthService } from '../../auth/auth.service';
+import { StockService } from '../../stock.service';
 
 export class UserHoldings {
   name: string;
@@ -45,7 +45,7 @@ export class StockHoldingsCardComponent implements OnInit {
         //iterate through key values pairs of each holding and use detailed
         //price info to get the percent change
         for(const [key, value] of Object.entries(this.userHoldings$)) {
-          console.log(key, value );
+          //console.log(key, value );
           const temp_row = {
             name: key,
             quantity: value.quantity,
@@ -57,7 +57,7 @@ export class StockHoldingsCardComponent implements OnInit {
         }
 
         this.userHoldingsData = userHoldingsData;
-        //console.log(userData);
+        console.log(userHoldingsData);
           
         });
       })

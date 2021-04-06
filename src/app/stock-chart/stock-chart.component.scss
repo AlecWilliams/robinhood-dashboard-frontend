@@ -1,0 +1,74 @@
+@import "../style.scss";
+
+.button-br{
+    margin-top: -0.1rem;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.9);
+  }
+
+.buying-br {
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  margin-right: 2rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.9);
+
+}
+
+  #chart-container .highcharts-container {
+    overflow: visible !important;
+}
+.chart-container {
+  margin-left: -20px;
+  width: 120%;
+ 
+}
+
+.container {
+  margin-left: -20px;
+}
+
+.button-row {
+  margin-top: -12px;
+}
+.chart {
+  margin-left: -50px;
+}
+.h6 {
+  display: inline-block;
+}
+
+.btn {
+  margin-top:-0;
+  font-weight: bold;
+  background-color: transparent;
+  color: black;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: black;
+  outline: none !important;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+
+}
+
+.btn:focus {
+  outline: none im !important;
+  box-shadow: none;
+  color: $green;
+  border-bottom: 2px solid $green;
+  border-radius: 0 !important;
+
+
+}
+
+.btn:hover {
+  color: $green;
+}
+
+
+
